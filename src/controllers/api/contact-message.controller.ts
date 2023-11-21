@@ -26,8 +26,10 @@ export const sendMessage = async (req: Request, res: Response) => {
     const re = /\S+@\S+\.\S+/;
     if (!re.test(email))
       return res.status(400).send({ message: "error_invalid_email" });
-    // validate phone: +96512345678
-    const rePhone = /^\d{10,16}$/;
+
+    // validate phone: +96512345678 or 0096512345678 or 0512345678
+    const rePhone = /^(\+\d{1,3})?\d{9,14}$/;
+
     if (!rePhone.test(phone))
       return res.status(400).send({ message: "error_invalid_phone" });
 
