@@ -36,7 +36,7 @@ export class GoogleSheetProvider {
     return res.data.values;
   }
 
-  public async addMessage(message: [string, string, string, string, string]) {
+  public async addMessage(message: [string, string, string, string, string, string, string, string, string, string]) {
     // append message to the end of the sheet
     const utcDate = DateTime.utc().toFormat('yyyy-MM-dd HH:mm:ss');
     message.push(utcDate);
@@ -52,7 +52,7 @@ export class GoogleSheetProvider {
     return res.data;
   }
 
-  public async addCompanyMessage(message: [string, string, string, string, string]) {
+  public async addCompanyMessage(message: [string, string, string, string, string, string, string, string, string, string]) {
     // append message to the end of the sheet
     const utcDate = DateTime.utc().toFormat('yyyy-MM-dd HH:mm:ss');
     message.push(utcDate);

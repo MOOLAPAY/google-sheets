@@ -15,7 +15,7 @@ export const sendMessage = async (req: Request, res: Response) => {
     if (req?.recaptcha?.error)
       return res.status(400).send({ message: "error_recaptcha", error: env === 'dev' ? req.recaptcha.error : null });
 
-    const { name, email, phone, company_size, message } = req.body;
+    const { name, email, phone, company_size, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content } = req.body;
     // validate required fields
     if (!name || !email || !phone)
       return res.status(400).send({ message: "error_required_fields" });
@@ -37,8 +37,8 @@ export const sendMessage = async (req: Request, res: Response) => {
     //sendMail(ContactMessageMail(req));
 
     // save to google sheet
-    const googleSheets = new GoogleSheetProvider();
-    await googleSheets.addMessage([name, email, phone, company_size, message]);
+     const googleSheets = new GoogleSheetProvider();
+     await googleSheets.addMessage([name, email, phone, company_size, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content]);
 
     res.send({ message: "OK" });
     return;
@@ -51,7 +51,7 @@ export const sendMessage = async (req: Request, res: Response) => {
 export const sendCompanyMessage = async (req: Request, res: Response) => {
   try {
 
-    const { name, email, title, category, message } = req.body;
+    const { name, email, title, category, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content } = req.body;
     // validate required fields
     if (!name || !email || !title)
       return res.status(400).send({ message: "error_required_fields" });
@@ -64,8 +64,8 @@ export const sendCompanyMessage = async (req: Request, res: Response) => {
       return res.status(400).send({ message: "error_invalid_email" });
 
     // save to google sheet
-    const googleSheets = new GoogleSheetProvider();
-    await googleSheets.addCompanyMessage([name, email, title, category, message]);
+     const googleSheets = new GoogleSheetProvider();
+     await googleSheets.addCompanyMessage([name, email, title, category, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content]);
 
     res.send({ message: "OK" });
     return;
