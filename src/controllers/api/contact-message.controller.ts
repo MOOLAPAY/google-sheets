@@ -3,6 +3,7 @@ import { GoogleSheetProvider } from "../../providers/google-sheet.provider";
 import { sendMail } from "../../services/mail.service";
 import { ContactMessageMail } from "../../templates/contact-message.mail";
 import dotenv from "dotenv";
+import { DateTime } from "luxon";
 
 dotenv.config();
 
@@ -38,7 +39,9 @@ export const sendMessage = async (req: Request, res: Response) => {
 
     // save to google sheet
      const googleSheets = new GoogleSheetProvider();
-     await googleSheets.addMessage([name, email, phone, company_size, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content]);
+     const utcDate = DateTime.utc().toFormat('yyyy-MM-dd HH:mm:ss');
+
+     await googleSheets.addMessage([name, email, phone, company_size, message, utcDate, utm_source, utm_medium, utm_campaign, utm_term, utm_content]);
 
     res.send({ message: "OK" });
     return;
@@ -65,7 +68,9 @@ export const sendCompanyMessage = async (req: Request, res: Response) => {
 
     // save to google sheet
      const googleSheets = new GoogleSheetProvider();
-     await googleSheets.addCompanyMessage([name, email, title, category, message, utm_source, utm_medium, utm_campaign, utm_term, utm_content]);
+     const utcDate = DateTime.utc().toFormat('yyyy-MM-dd HH:mm:ss');
+     
+     await googleSheets.addCompanyMessage([name, email, title, category, message, utcDate, utm_source, utm_medium, utm_campaign, utm_term, utm_content]);
 
     res.send({ message: "OK" });
     return;
